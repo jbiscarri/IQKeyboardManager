@@ -164,7 +164,7 @@
     [items addObject:nilButton];
     
     //  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
-    UIImage *hideKeyboardImage = [UIImage imageNamed:@"hide_keyboard" inBundle:resourcesBundle compatibleWithTraitCollection:nil];
+    UIImage *hideKeyboardImage = [self hideKeyboardImage];
     IQBarButtonItem *doneButton = [[IQBarButtonItem alloc] initWithImage:hideKeyboardImage style:UIBarButtonItemStylePlain target:target action:action];
 
     [items addObject:doneButton];
@@ -238,7 +238,7 @@
     [items addObject:nilButton];
     
     //  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
-    UIImage *hideKeyboardImage = [UIImage imageNamed:@"hide_keyboard" inBundle:resourcesBundle compatibleWithTraitCollection:nil];
+    UIImage *hideKeyboardImage = [self hideKeyboardImage];
     IQBarButtonItem *doneButton = [[IQBarButtonItem alloc] initWithImage:hideKeyboardImage style:UIBarButtonItemStylePlain target:target action:action];
     [items addObject:doneButton];
     
@@ -316,7 +316,7 @@
     [items addObject:nilButton];
     
     //  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
-    UIImage *hideKeyboardImage = [UIImage imageNamed:@"hide_keyboard" inBundle:resourcesBundle compatibleWithTraitCollection:nil];
+    UIImage *hideKeyboardImage = [self hideKeyboardImage];
     IQBarButtonItem *doneButton = [[IQBarButtonItem alloc] initWithImage:hideKeyboardImage style:UIBarButtonItemStylePlain target:target action:rightAction];
 
     [items addObject:doneButton];
@@ -395,7 +395,7 @@
     [items addObject:nilButton];
     
     //  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
-    UIImage *hideKeyboardImage = [UIImage imageNamed:@"hide_keyboard" inBundle:resourcesBundle compatibleWithTraitCollection:nil];
+    UIImage *hideKeyboardImage = [self hideKeyboardImage];
     IQBarButtonItem *doneButton = [[IQBarButtonItem alloc] initWithImage:hideKeyboardImage style:UIBarButtonItemStylePlain target:target action:doneAction];
 
     [items addObject:doneButton];
@@ -440,7 +440,7 @@
 	NSMutableArray *items = [[NSMutableArray alloc] init];
 	
 	//  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
-    UIImage *hideKeyboardImage = [UIImage imageNamed:@"hide_keyboard" inBundle:resourcesBundle compatibleWithTraitCollection:nil];
+    UIImage *hideKeyboardImage = [self hideKeyboardImage];
     IQBarButtonItem *doneButton = [[IQBarButtonItem alloc] initWithImage:hideKeyboardImage style:UIBarButtonItemStylePlain target:target action:doneAction];
 
 	if (IQ_IS_IOS7_OR_GREATER)
@@ -566,7 +566,7 @@
     NSMutableArray *items = [[NSMutableArray alloc] init];
     
     //  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
-    UIImage *hideKeyboardImage = [UIImage imageNamed:@"hide_keyboard" inBundle:resourcesBundle compatibleWithTraitCollection:nil];
+    UIImage *hideKeyboardImage = [self hideKeyboardImage];
     IQBarButtonItem *doneButton = [[IQBarButtonItem alloc] initWithImage:hideKeyboardImage style:UIBarButtonItemStylePlain target:target action:rightButtonAction];
 
     
@@ -728,6 +728,26 @@
 			}
 		}
     }
+}
+
+- (UIImage *)hideKeyboardImage {
+    UIImage *hideKeyboardImage;
+#ifdef NSFoundationVersionNumber_iOS_7_1
+    if (IQ_IS_IOS8_OR_GREATER)
+    {
+        NSBundle *mainBundle = [NSBundle bundleForClass:[IQKeyboardManager class]];
+        NSBundle *resourcesBundle = [NSBundle bundleWithPath:[mainBundle pathForResource:@"IQKeyboardManager" ofType:@"bundle"]];
+        if (resourcesBundle == nil)
+            resourcesBundle = mainBundle;
+        
+        hideKeyboardImage = [UIImage imageNamed:@"hide_keyboard" inBundle:resourcesBundle compatibleWithTraitCollection:nil];
+    }
+    else
+#endif
+    {
+        hideKeyboardImage = [UIImage imageNamed:@"IQKeyboardManager.bundle/hide_keyboard"];
+    }
+    return hideKeyboardImage;
 }
 
 @end
